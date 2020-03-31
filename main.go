@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/neekonsu/go_exercises/urlshort"
+	"github.com/neekonsu/urlshort"
 )
 
 func main() {
@@ -12,7 +12,7 @@ func main() {
 
 	// Build the MapHandler using the mux as the fallback
 	pathsToUrls := map[string]string{
-		"/urlshort-godoc": "https://godoc.org/github.com/neekonsu/go_exercises/urlshort",
+		"/urlshort-godoc": "https://godoc.org/github.com/neekonsu/urlshort",
 		"/yaml-godoc":     "https://godoc.org/gopkg.in/yaml.v2",
 	}
 	mapHandler := urlshort.MapHandler(pathsToUrls, mux)
@@ -21,9 +21,9 @@ func main() {
 	// fallback
 	yaml := `
 - path: /urlshort
-  url: https://github.com/neekonsu/go_exercises/urlshort
+  url: https://github.com/neekonsu/urlshort
 - path: /urlshort-final
-  url: https://github.com/neekonsu/go_exercises/urlshort/tree/solution
+  url: https://github.com/neekonsu/urlshort/tree/solution
 `
 	yamlHandler, err := urlshort.YAMLHandler([]byte(yaml), mapHandler)
 	if err != nil {
