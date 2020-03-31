@@ -38,12 +38,34 @@ func MapHandler(pathsToUrls map[string]string, fallback http.Handler) http.Handl
 //
 // See MapHandler to create a similar http.HandlerFunc via
 // a mapping of paths to urls.
-
 func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
-	m := makle(map[interface{}]interface{})
-	err := yaml.Unmarshal(yml, &m)
+	paths, err := parseYAML(yml)
 	if err != nil {
 		return nil, err
 	}
-	return MapHandler(pathMap, fallback), nil
+	// This is necessary, cannot replace with var pathsMap map[string]string
+	pathsMap := makeMap(paths)
+	return MapHandler(pathsMap, fallback), nil
+}
+
+func parseYAML(yml []byte) ([]path, error) {
+	var paths []path
+	err := yaml.Unmarshal(yml, &paths)
+	if err != nil {
+		return nil, err
+	}
+	return paths, nil
+}
+
+func makeMap(paths []path) map[string]string {
+	pathsMap := make(map[string]string)
+	for _, p := range paths {
+		pathsMap[p.Path] = p.URL
+	}
+	return pathsMap
+}
+
+type path struct {
+	Path string `yaml:"path"`
+	URL  string `yaml:"url"`
 }

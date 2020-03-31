@@ -23,7 +23,7 @@ func main() {
 - path: /urlshort
   url: https://github.com/neekonsu/urlshort
 - path: /urlshort-final
-  url: https://github.com/neekonsu/urlshort/tree/solution
+  url: https://github.com/neekonsu/urlshort/
 `
 	yamlHandler, err := urlshort.YAMLHandler([]byte(yaml), mapHandler)
 	if err != nil {
